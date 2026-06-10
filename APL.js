@@ -11,6 +11,7 @@ class APL {
 
     constructor(props) {
         this.vendors = props.vendors || [];
+        this.schemaPath = props.schemaPath || './Schemas/home.js';
 
         this.pubsub = new BestAppsPublishSubscribe();
 
@@ -67,7 +68,7 @@ class APL {
         let aplDocument = aplFactory.create(APLDocumentComponent, container);
 
         let aplLoader = new APLLoader({
-            path: './custom/APL/Schemas/home.js',
+            path: this.schemaPath,
             factory: aplFactory,
             container: aplDocument,
         });

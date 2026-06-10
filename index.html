@@ -8,6 +8,19 @@
             gap: 10px;
         }
 
+        #palette {
+            width: 150px;
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+
+        #inspector {
+            width: 300px;
+            height: 500px;
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+
         #document {
             width: 500px;
             height: 500px;
@@ -29,6 +42,31 @@
     <script src="./webcomponents/utils/uid.js"></script>
     <script src="./webcomponents/utils/APLComponentRegistry.js"></script>
     <script src="./webcomponents/BestAppsComponent.js"></script>
+
+    <!-- ObjectInspector from webcomponents submodule -->
+    <script src="./webcomponents/custom/ObjectInspector/BestAppsObjectInspectorComponent.js"></script>
+    <script src="./webcomponents/custom/ObjectInspector/BestAppsObjectInspectorObjectsComponent.js"></script>
+    <script src="./webcomponents/custom/ObjectInspector/tab/BestAppsObjectInspectorTabsComponent.js"></script>
+    <script src="./webcomponents/custom/ObjectInspector/tab/BestAppsObjectInspectorTabComponent.js"></script>
+    <script src="./webcomponents/custom/ObjectInspector/tab/Property/BestAppsObjectInspectorPropertiesTabComponent.js"></script>
+    <script src="./webcomponents/custom/ObjectInspector/tab/Event/BestAppsObjectInspectorEventsTabComponent.js"></script>
+    <script src="./webcomponents/custom/ObjectInspector/tab/Property/BestAppsObjectInspectorPropertyComponent.js"></script>
+    <script src="./webcomponents/custom/ObjectInspector/tab/Property/BestAppsObjectInspectorPropertyInputComponent.js"></script>
+    <script src="./webcomponents/custom/ObjectInspector/tab/Property/BestAppsObjectInspectorPropertyListComponent.js"></script>
+    <script src="./webcomponents/custom/ObjectInspector/tab/Property/BestAppsObjectInspectorPropertyArrayComponent.js"></script>
+    <script src="./webcomponents/custom/ObjectInspector/BestAppsPropertyAdaptor.js"></script>
+
+    <!-- ObjectPalette from webcomponents submodule -->
+    <script src="./webcomponents/custom/ObjectPalette/BestAppsObjectPaletteComponent.js"></script>
+
+    <!-- APL Inspector extensions -->
+    <script src="ObjectInspector/APLObjectInspectorObjectsComponent.js"></script>
+    <script src="ObjectInspector/tab/APLObjectInspectorEventsTabComponent.js"></script>
+    <script src="ObjectInspector/tab/APLObjectInspectorDataTabComponent.js"></script>
+    <script src="ObjectInspector/tab/property/APLObjectInspectorPropertyCommandComponent.js"></script>
+    <script src="ObjectInspector/tab/property/APLCommandPropertiesComponent.js"></script>
+    <script src="ObjectInspector/tab/property/APLObjectInspectorPropertyScaleComponent.js"></script>
+    <script src="ObjectInspector/tab/property/APLObjectInspectorPropertiesTabComponent.js"></script>
 
     <!-- APL scripts at root -->
     <script src="APLDataComponent.js"></script>
@@ -64,10 +102,13 @@
 </head>
 <body>
 <div id="container">
+    <div id="palette"></div>
+    <div id="inspector"></div>
     <div>
         <div id="screen"></div>
         <div id="document"></div>
     </div>
+    <div id="data" style="width:400px;height:500px;"></div>
 </div>
 <script>
 
