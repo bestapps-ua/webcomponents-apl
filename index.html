@@ -1,0 +1,96 @@
+<html>
+<head>
+    <style>
+        #container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        #document {
+            width: 500px;
+            height: 500px;
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+
+        #screen {
+            height: 25px;
+        }
+    </style>
+    <script
+            src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous">
+    </script>
+
+    <!-- Base scripts from webcomponents submodule -->
+    <script src="./webcomponents/utils/uid.js"></script>
+    <script src="./webcomponents/utils/APLComponentRegistry.js"></script>
+    <script src="./webcomponents/BestAppsComponent.js"></script>
+
+    <!-- APL scripts at root -->
+    <script src="APLDataComponent.js"></script>
+    <script src="APL.js"></script>
+    <script src="APLDom.js"></script>
+    <script src="APLScreen.js"></script>
+    <script src="APLFactory.js"></script>
+    <script src="APLPalette.js"></script>
+    <script src="APLComponent.js"></script>
+    <script src="APLFrameComponent.js"></script>
+    <script src="APLImageComponent.js"></script>
+    <script src="APLTextComponent.js"></script>
+    <script src="APLActionableComponent.js"></script>
+    <script src="APLTouchableComponent.js"></script>
+    <script src="APLDocumentComponent.js"></script>
+    <script src="APLMultiChildComponent.js"></script>
+    <script src="APLContainerComponent.js"></script>
+    <script src="APLTouchWrapperComponent.js"></script>
+    <script src="APLScrollViewComponent.js"></script>
+    <script src="APLEditTextComponent.js"></script>
+    <script src="APLScreenComponent.js"></script>
+
+    <script src="APLLoader.js"></script>
+    <script src="APLProperties.js"></script>
+    <script src="APLEvents.js"></script>
+
+    <script src="ObjectInspector/command/APLCommand.js"></script>
+    <script src="ObjectInspector/command/APLSetValueCommand.js"></script>
+    <script src="ObjectInspector/command/APLSendEventCommand.js"></script>
+
+    <script src="Dialogs/APLDialogComponent.js"></script>
+    <script src="Dialogs/APLConfirmDialogComponent.js"></script>
+</head>
+<body>
+<div id="container">
+    <div>
+        <div id="screen"></div>
+        <div id="document"></div>
+    </div>
+</div>
+<script>
+
+    window.addEventListener('load', function () {
+        new APL({
+            vendors: [
+                {
+                    name: 'Treeselect JS',
+                    description: 'https://github.com/dipson88/treeselectjs',
+                    js: './vendor/treeselectjs/treeselect.js',
+                    css: './vendor/treeselectjs/treeselect.css'
+                },
+                {
+                    name: 'jsoneditor',
+                    description: 'https://github.com/josdejong/jsoneditor',
+                    js: './vendor/jsoneditor/jsoneditor.js',
+                    css: './vendor/jsoneditor/jsoneditor.css'
+                }
+
+            ]
+        });
+    });
+
+</script>
+</body>
+</html>

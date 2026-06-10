@@ -1,0 +1,12 @@
+export { ComponentFixture } from '../../webcomponents/tests/helpers/components/ComponentFixture';
+export { APLComponentFixture } from './components/APLComponentFixture';
+export { AsyncFixture } from '../../webcomponents/tests/helpers/components/AsyncFixture';
+export { APLContainerFixture } from './components/APLContainerFixture';
+export { APLFrameFixture } from './components/APLFrameFixture';
+export { APLTextFixture } from './components/APLTextFixture';
+export { APLImageFixture } from './components/APLImageFixture';
+export { APLTouchWrapperFixture } from './components/APLTouchWrapperFixture';
+export { APLScrollViewFixture } from './components/APLScrollViewFixture';
+export { APLEditTextFixture } from './components/APLEditTextFixture';
+export { APLDocumentFixture } from './components/APLDocumentFixture';
+export { APLScreenFixture } from './components/APLScreenFixture';
