@@ -58,7 +58,7 @@ exports.config = {
     },
 
     onPrepare: async function () {
-        const root = path.resolve(__dirname, '..');
+        const root = path.resolve(__dirname, '..', '..');
         server = await createServer(root, PORT);
     },
 

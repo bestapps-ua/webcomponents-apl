@@ -1,6 +1,6 @@
 import { APLTextFixture } from '../../helpers/Component';
 
-const fixture = new APLTextFixture('/tests/fixtures/apl-text.html', '#text1');
+const fixture = new APLTextFixture('/webcomponents-apl/tests/fixtures/apl-text.html', '#text1');
 
 describe('APLTextComponent', () => {
     before(() => fixture.open());

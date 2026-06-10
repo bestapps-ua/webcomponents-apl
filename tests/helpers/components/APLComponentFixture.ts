@@ -1,5 +1,5 @@
 import { browser } from '@wdio/globals';
-import { ComponentFixture } from '../../../webcomponents/tests/helpers/components/ComponentFixture';
+import { ComponentFixture } from '../../../../webcomponents/tests/helpers/components/ComponentFixture';
 
 export class APLComponentFixture extends ComponentFixture {
     async propertyKeys(): Promise<string[]> {

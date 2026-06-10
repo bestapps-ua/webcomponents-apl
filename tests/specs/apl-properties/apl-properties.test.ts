@@ -2,7 +2,7 @@ import { browser, expect } from '@wdio/globals';
 
 describe('APLProperties', () => {
     before(async () => {
-        await browser.url('/tests/fixtures/apl-properties.html');
+        await browser.url('/webcomponents-apl/tests/fixtures/apl-properties.html');
         await browser.waitUntil(
             async () => browser.execute(() => !!(window as any)._testReady),
             { timeout: 5000 },

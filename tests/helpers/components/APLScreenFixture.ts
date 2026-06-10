@@ -1,5 +1,5 @@
 import { browser } from '@wdio/globals';
-import { AsyncFixture } from '../../../webcomponents/tests/helpers/components/AsyncFixture';
+import { AsyncFixture } from '../../../../webcomponents/tests/helpers/components/AsyncFixture';
 
 export class APLScreenFixture extends AsyncFixture {
     async getDeviceNames(): Promise<string[]> {

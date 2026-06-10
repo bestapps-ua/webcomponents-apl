@@ -1,6 +1,6 @@
 import { APLScrollViewFixture } from '../../helpers/Component';
 
-const fixture = new APLScrollViewFixture('/tests/fixtures/apl-scrollview.html', '#scroll1');
+const fixture = new APLScrollViewFixture('/webcomponents-apl/tests/fixtures/apl-scrollview.html', '#scroll1');
 
 describe('APLScrollViewComponent', () => {
     before(() => fixture.open());

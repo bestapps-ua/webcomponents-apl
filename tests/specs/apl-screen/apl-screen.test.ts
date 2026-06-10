@@ -1,6 +1,6 @@
 import { APLScreenFixture } from '../../helpers/Component';
 
-const fixture = new APLScreenFixture('/tests/fixtures/apl-screen.html', '#screen1', '_testScreen');
+const fixture = new APLScreenFixture('/webcomponents-apl/tests/fixtures/apl-screen.html', '#screen1', '_testScreen');
 
 describe('APLScreenComponent', () => {
     before(() => fixture.open());

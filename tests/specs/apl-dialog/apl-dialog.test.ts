@@ -2,7 +2,7 @@ import { browser, expect } from '@wdio/globals';
 
 describe('APL Dialog — native <dialog> with showModal()', () => {
     before(async () => {
-        await browser.url('/tests/fixtures/apl-dialog.html');
+        await browser.url('/webcomponents-apl/tests/fixtures/apl-dialog.html');
         await browser.waitUntil(
             async () => browser.execute(() => !!(window as any)._testReady),
             { timeout: 10000, timeoutMsg: 'Dialog fixture not ready' },

@@ -1,6 +1,6 @@
 import { APLComponentFixture } from '../../helpers/Component';
 
-const fixture = new APLComponentFixture('/tests/fixtures/apl-component.html', '#apl1');
+const fixture = new APLComponentFixture('/webcomponents-apl/tests/fixtures/apl-component.html', '#apl1');
 
 describe('APLComponent', () => {
     before(() => fixture.open());
