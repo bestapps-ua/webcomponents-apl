@@ -36,6 +36,9 @@ class APLDataComponent extends BestAppsComponent {
                 }
             },
         });
+        // jsoneditor enables Ace wrap mode by default in code mode;
+        // disable it so long lines get a horizontal scrollbar instead of wrapping
+        this.jsoneditor.aceEditor?.getSession().setUseWrapMode(false);
     }
 
     setDocument(doc) {
