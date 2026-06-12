@@ -1,4 +1,4 @@
-import { ComponentFixture } from '../../../webcomponents/tests/helpers/components/ComponentFixture';
+import { ComponentFixture } from '../../../../webcomponents/tests/helpers/components/ComponentFixture';
 
 export class APLDocumentFixture extends ComponentFixture {
     testDocument() {

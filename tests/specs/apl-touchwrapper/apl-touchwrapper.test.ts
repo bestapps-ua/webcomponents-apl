@@ -1,6 +1,6 @@
 import { APLTouchWrapperFixture } from '../../helpers/Component';
 
-const fixture = new APLTouchWrapperFixture('/tests/fixtures/apl-touchwrapper.html', '#touch1');
+const fixture = new APLTouchWrapperFixture('/webcomponents-apl/tests/fixtures/apl-touchwrapper.html', '#touch1');
 
 describe('APLTouchWrapperComponent', () => {
     before(() => fixture.open());

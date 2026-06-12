@@ -1,5 +1,6 @@
 const path = require('path');
 const { createServer } = require('./helpers/server');
+const chromedriverPath = require('chromedriver').path;
 
 process.env.TS_NODE_TRANSPILE_ONLY = 'true';
 process.env.TS_NODE_PROJECT = path.join(__dirname, 'tsconfig.json');
@@ -37,6 +38,9 @@ exports.config = {
         'goog:chromeOptions': {
             args: chromeArgs,
         },
+        'wdio:chromedriverOptions': {
+            binary: chromedriverPath,
+        },
     }],
 
     logLevel: 'warn',
@@ -54,7 +58,7 @@ exports.config = {
     },
 
     onPrepare: async function () {
-        const root = path.resolve(__dirname, '..');
+        const root = path.resolve(__dirname, '..', '..');
         server = await createServer(root, PORT);
     },
 

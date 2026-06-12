@@ -1,6 +1,6 @@
-export { ComponentFixture } from '../../webcomponents/tests/helpers/components/ComponentFixture';
+export { ComponentFixture } from '../../../webcomponents/tests/helpers/components/ComponentFixture';
 export { APLComponentFixture } from './components/APLComponentFixture';
-export { AsyncFixture } from '../../webcomponents/tests/helpers/components/AsyncFixture';
+export { AsyncFixture } from '../../../webcomponents/tests/helpers/components/AsyncFixture';
 export { APLContainerFixture } from './components/APLContainerFixture';
 export { APLFrameFixture } from './components/APLFrameFixture';
 export { APLTextFixture } from './components/APLTextFixture';

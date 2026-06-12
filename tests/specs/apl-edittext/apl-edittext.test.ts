@@ -1,6 +1,6 @@
 import { APLEditTextFixture } from '../../helpers/Component';
 
-const fixture = new APLEditTextFixture('/tests/fixtures/apl-edittext.html', '#edittext1');
+const fixture = new APLEditTextFixture('/webcomponents-apl/tests/fixtures/apl-edittext.html', '#edittext1');
 
 describe('APLEditTextComponent', () => {
     before(() => fixture.open());

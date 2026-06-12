@@ -1,6 +1,6 @@
 import { APLFrameFixture } from '../../helpers/Component';
 
-const fixture = new APLFrameFixture('/tests/fixtures/apl-frame.html', '#frame1');
+const fixture = new APLFrameFixture('/webcomponents-apl/tests/fixtures/apl-frame.html', '#frame1');
 
 describe('APLFrameComponent', () => {
     before(() => fixture.open());

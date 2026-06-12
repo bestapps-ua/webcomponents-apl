@@ -2,7 +2,7 @@ import { browser, expect } from '@wdio/globals';
 
 describe('APLDataComponent', () => {
     before(async () => {
-        await browser.url('/tests/fixtures/apl-data-component.html');
+        await browser.url('/webcomponents-apl/tests/fixtures/apl-data-component.html');
         await browser.waitUntil(
             async () => browser.execute(() => !!(window as any)._testReady),
             { timeout: 8000, timeoutMsg: 'APLDataComponent fixture not ready' },
