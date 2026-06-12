@@ -4,9 +4,9 @@ Describe the APLDialogComponent and APLConfirmDialogComponent based on the follo
 
 ## Overview
 
-**APLDialogComponent** (`Dialogs/APLDialogComponent.js`) is a generic modal dialog component extending `APLComponent`. It uses the native `<dialog>` element with `showModal()` for top-layer rendering — the dialog always covers the full viewport regardless of ancestor `transform`, `filter`, or `perspective` CSS.
+**APLDialogComponent** (`ui/dialogs/APLDialogComponent.js`) is a generic modal dialog component extending `APLComponent`. It uses the native `<dialog>` element with `showModal()` for top-layer rendering — the dialog always covers the full viewport regardless of ancestor `transform`, `filter`, or `perspective` CSS.
 
-**APLConfirmDialogComponent** (`Dialogs/APLConfirmDialogComponent.js`) extends the base dialog to add a Confirm button for yes/no decisions.
+**APLConfirmDialogComponent** (`ui/dialogs/APLConfirmDialogComponent.js`) extends the base dialog to add a Confirm button for yes/no decisions.
 
 ## Tags
 - `<apl-dialog-component>` (APLDialogComponent)

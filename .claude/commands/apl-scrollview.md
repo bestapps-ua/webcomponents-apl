@@ -4,7 +4,7 @@ Describe the APLScrollViewComponent based on the following analysis.
 
 ## Overview
 
-`APLScrollViewComponent` (`custom/APL/APLScrollViewComponent.js`) represents the APL ScrollView component - a scrollable single-child container. It extends `APLActionableComponent` and is currently a minimal stub with no additional properties or behavior.
+`APLScrollViewComponent` (`custom/APL/ui/components/APLScrollViewComponent.js`) represents the APL ScrollView component - a scrollable single-child container. It extends `APLActionableComponent` and is currently a minimal stub with no additional properties or behavior.
 
 ## Tag: `<apl-scroll-view-component>`
 

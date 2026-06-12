@@ -17,7 +17,7 @@ APL-specific classes loaded as plain ES6 via `<script>` tags:
 - **APLFactory.js** - creates/clones/manages APL components, handles drag-and-drop onto the canvas
 - **APLDom.js** - virtual tree representation mirroring the APL document structure
 - **APLLoader.js** - loads APL JSON schemas and instantiates component trees
-- **APLScreen.js / APLScreenComponent.js** - device resolution management and UI (Echo Show, Echo Spot)
+- **APLScreen.js / ui/components/APLScreenComponent.js** - device resolution management and UI (Echo Show, Echo Spot)
 - **APLProperties.js / APLEvents.js** - encode/decode between APL data format and CSS styles
 - **APLPalette.js** - populates the draggable component palette
 - **Visual components** - APLContainerComponent, APLFrameComponent, APLImageComponent, APLTextComponent, APLTouchWrapperComponent, APLScrollViewComponent, APLEditTextComponent, APLDocumentComponent
@@ -26,8 +26,8 @@ APL-specific classes loaded as plain ES6 via `<script>` tags:
 
 ### Subdirectories
 
-- **ObjectInspector/** - APL-specific inspector extensions (properties tab, events tab, data tab, objects/tree tab, commands tab)
-- **Dialogs/** - modal and confirm dialog components
+- **ui/components/object-inspector/** - APL-specific inspector extensions (properties tab, events tab, data tab, objects/tree tab, commands tab)
+- **ui/dialogs/** - modal and confirm dialog components
 - **Schemas/** - APL JSON schema files for validation and loading
 - **vendor/** - third-party libraries (jsoneditor, treeselectjs)
 
@@ -64,12 +64,12 @@ Tests live in `tests/` using **WebdriverIO** with 13 pure-APL test specs coverin
 
 ```
 APL.js                            -- Main orchestrator
-APLComponent.js                   -- Base APL component
+ui/components/APLComponent.js                   -- Base APL component
 APLFactory.js                     -- Component creation & drag-drop
 APLDom.js                         -- Virtual DOM tree
 APLLoader.js                      -- Schema loader
 APLScreen.js                      -- Device resolution
-APLScreenComponent.js             -- Device resolution UI
+ui/components/APLScreenComponent.js             -- Device resolution UI
 APLProperties.js                  -- Property encode/decode
 APLEvents.js                      -- Event encode/decode
 APLPalette.js                     -- Component palette setup
@@ -77,8 +77,8 @@ APL*Component.js                  -- Visual components
 APLCommand.js                     -- Command base
 APLSendEventCommand.js            -- SendEvent command
 APLSetValueCommand.js             -- SetValue command
-ObjectInspector/                  -- APL-specific inspector extensions
-Dialogs/                          -- Modal dialogs
+ui/components/object-inspector/                  -- APL-specific inspector extensions
+ui/dialogs/                          -- Modal dialogs
 Schemas/                          -- APL JSON schemas
 vendor/                           -- Third-party (jsoneditor, treeselectjs)
 webcomponents/                    -- Git submodule: base framework

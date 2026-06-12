@@ -4,7 +4,7 @@ Describe the APLEditTextComponent based on the following analysis.
 
 ## Overview
 
-`APLEditTextComponent` (`APLEditTextComponent.js`) represents the APL EditText component - a text input field. It extends `APLActionableComponent` and adds `text` and `color` properties. Like ScrollView, it is a minimal implementation.
+`APLEditTextComponent` (`ui/components/APLEditTextComponent.js`) represents the APL EditText component - a text input field. It extends `APLActionableComponent` and adds `text` and `color` properties. Like ScrollView, it is a minimal implementation.
 
 ## Tag: `<apl-edit-text-component>`
 

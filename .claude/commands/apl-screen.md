@@ -6,7 +6,7 @@ Describe the APLScreen utility class and APLScreenComponent based on the followi
 
 **APLScreen** (`custom/APL/APLScreen.js`) is a utility class (not a Web Component) that manages device resolution, dp-to-pixel conversion, and screen resizing. It holds the current device profile and resolution, and emits events when they change.
 
-**APLScreenComponent** (`custom/APL/APLScreenComponent.js`) is a Web Component UI that provides device and resolution dropdowns, allowing users to switch between Alexa devices and their resolution modes.
+**APLScreenComponent** (`custom/APL/ui/components/APLScreenComponent.js`) is a Web Component UI that provides device and resolution dropdowns, allowing users to switch between Alexa devices and their resolution modes.
 
 ## Tags
 - `<apl-screen-component>` (APLScreenComponent)

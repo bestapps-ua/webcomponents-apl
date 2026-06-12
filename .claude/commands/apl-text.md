@@ -4,7 +4,7 @@ Describe the APLTextComponent based on the following analysis.
 
 ## Overview
 
-`APLTextComponent` (`custom/APL/APLTextComponent.js`) represents the APL Text component for displaying styled text. It extends `APLComponent` and adds typography properties (font, color, alignment) with custom height calculation for `auto`-height text.
+`APLTextComponent` (`custom/APL/ui/components/APLTextComponent.js`) represents the APL Text component for displaying styled text. It extends `APLComponent` and adds typography properties (font, color, alignment) with custom height calculation for `auto`-height text.
 
 ## Tag: `<apl-text-component>`
 

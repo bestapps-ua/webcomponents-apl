@@ -4,7 +4,7 @@ Describe the APLCommand hierarchy based on the following analysis.
 
 ## Overview
 
-The command system (`ObjectInspector/command/`) models APL commands that are attached to component events (e.g., `onPress: [{type: "SendEvent", arguments: [...]}]`). Commands are plain classes (not Web Components) with private fields, getters/setters, and APL data serialization.
+The command system (`ui/components/object-inspector/command/`) models APL commands that are attached to component events (e.g., `onPress: [{type: "SendEvent", arguments: [...]}]`). Commands are plain classes (not Web Components) with private fields, getters/setters, and APL data serialization.
 
 ## Class Hierarchy
 

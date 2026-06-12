@@ -4,7 +4,7 @@ Describe the `APLComponent` base class based on the following analysis.
 
 ## Overview
 
-`APLComponent` (`APLComponent.js`) extends `BestAppsComponent` and serves as the base class for all APL visual components (Container, Frame, Image, Text, TouchWrapper, etc.). It adds APL-specific identity (name, type, number), a declarative property system with CSS mapping, parent-child relationships, and factory integration.
+`APLComponent` (`ui/components/APLComponent.js`) extends `BestAppsComponent` and serves as the base class for all APL visual components (Container, Frame, Image, Text, TouchWrapper, etc.). It adds APL-specific identity (name, type, number), a declarative property system with CSS mapping, parent-child relationships, and factory integration.
 
 ## Tag: `<apl-component>`
 

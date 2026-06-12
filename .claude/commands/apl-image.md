@@ -4,7 +4,7 @@ Describe the APLImageComponent based on the following analysis.
 
 ## Overview
 
-`APLImageComponent` (`APLImageComponent.js`) represents the APL Image component. It extends `APLComponent` and adds image-specific properties like `source`, `scale`, `align`, and `borderRadius`. The actual `<img>` element is created by `APLFactory.initComponent()`, not by the component itself.
+`APLImageComponent` (`ui/components/APLImageComponent.js`) represents the APL Image component. It extends `APLComponent` and adds image-specific properties like `source`, `scale`, `align`, and `borderRadius`. The actual `<img>` element is created by `APLFactory.initComponent()`, not by the component itself.
 
 ## Tag: `<apl-image-component>`
 

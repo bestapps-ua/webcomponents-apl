@@ -4,7 +4,7 @@ Describe the APL-specific inspector components based on the following analysis.
 
 ## Overview
 
-The APL Inspector extensions (`ObjectInspector/`) extend the generic Object Inspector with APL-specific behavior: a tree-based component selector (instead of a flat dropdown), APL event/command editing, and a JSON data editor.
+The APL Inspector extensions (`ui/components/object-inspector/`) extend the generic Object Inspector with APL-specific behavior: a tree-based component selector (instead of a flat dropdown), APL event/command editing, and a JSON data editor.
 
 ## Components
 

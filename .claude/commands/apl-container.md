@@ -4,9 +4,9 @@ Describe the APLContainerComponent and APLMultiChildComponent based on the follo
 
 ## Overview
 
-`APLContainerComponent` (`APLContainerComponent.js`) represents the APL Container layout component - a flexbox-based parent that arranges child components in rows or columns. It extends `APLMultiChildComponent`, which is a thin marker class extending `APLComponent`.
+`APLContainerComponent` (`ui/components/APLContainerComponent.js`) represents the APL Container layout component - a flexbox-based parent that arranges child components in rows or columns. It extends `APLMultiChildComponent`, which is a thin marker class extending `APLComponent`.
 
-`APLMultiChildComponent` (`APLMultiChildComponent.js`) is a near-empty intermediate class that exists to semantically mark components that can contain multiple children. Currently adds nothing beyond `APLComponent`.
+`APLMultiChildComponent` (`ui/components/APLMultiChildComponent.js`) is a near-empty intermediate class that exists to semantically mark components that can contain multiple children. Currently adds nothing beyond `APLComponent`.
 
 ## Tags
 - `<apl-container-component>` (APLContainerComponent)

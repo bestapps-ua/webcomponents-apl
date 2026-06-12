@@ -4,7 +4,7 @@ Describe the APLDocumentComponent based on the following analysis.
 
 ## Overview
 
-`APLDocumentComponent` (`APLDocumentComponent.js`) represents the root APL document - the top-level canvas that holds all APL components. It extends `APLComponent` and overrides only the styles to create a full-size black canvas with flex column layout. Created by `APLFactory.create()` and serves as the root drop target.
+`APLDocumentComponent` (`ui/components/APLDocumentComponent.js`) represents the root APL document - the top-level canvas that holds all APL components. It extends `APLComponent` and overrides only the styles to create a full-size black canvas with flex column layout. Created by `APLFactory.create()` and serves as the root drop target.
 
 ## Tag: `<apl-document-component>`
 

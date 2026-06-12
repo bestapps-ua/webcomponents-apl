@@ -4,7 +4,7 @@ Describe the APLFrameComponent based on the following analysis.
 
 ## Overview
 
-`APLFrameComponent` (`APLFrameComponent.js`) represents the APL Frame component - a single-child container with visual styling (background, border, border-radius). It extends `APLComponent` directly and adds color/border properties with a custom `onCSSSet` handler for border rendering.
+`APLFrameComponent` (`ui/components/APLFrameComponent.js`) represents the APL Frame component - a single-child container with visual styling (background, border, border-radius). It extends `APLComponent` directly and adds color/border properties with a custom `onCSSSet` handler for border rendering.
 
 ## Tag: `<apl-frame-component>`
 

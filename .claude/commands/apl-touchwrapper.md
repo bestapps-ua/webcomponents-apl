@@ -4,17 +4,17 @@ Describe the APLTouchWrapperComponent and its inheritance chain (APLTouchableCom
 
 ## Overview
 
-`APLTouchWrapperComponent` (`custom/APL/APLTouchWrapperComponent.js`) represents an interactive touch target in APL. It wraps a single child component and handles touch/press events. It sits at the end of an inheritance chain:
+`APLTouchWrapperComponent` (`custom/APL/ui/components/APLTouchWrapperComponent.js`) represents an interactive touch target in APL. It wraps a single child component and handles touch/press events. It sits at the end of an inheritance chain:
 
 ```
 BestAppsComponent -> APLComponent -> APLActionableComponent -> APLTouchableComponent -> APLTouchWrapperComponent
 ```
 
-### APLActionableComponent (`custom/APL/APLActionableComponent.js`)
+### APLActionableComponent (`custom/APL/ui/components/APLActionableComponent.js`)
 Base for components that respond to focus and keyboard events. Adds APL events:
 - `onFocus`, `onBlur`, `handleKeyDown`, `handleKeyUp` (all type: `commands`)
 
-### APLTouchableComponent (`custom/APL/APLTouchableComponent.js`)
+### APLTouchableComponent (`custom/APL/ui/components/APLTouchableComponent.js`)
 Adds touch/gesture APL events:
 - `gesture`, `gestures`, `onCancel`, `onDown`, `onMove`, `onPress`, `onUp` (all type: `commands`)
 
