@@ -1,4 +1,6 @@
 class APL {
+    static REFRESH_DEBOUNCE_MS = 500;
+
     /**
      * @property {Array<Object>} vendors
      */
@@ -59,7 +61,7 @@ class APL {
                 let properties = component.getAPLProperties();
                 let data = component.getAPLData();
                 for (const key in properties) {
-                    APLProperties.encode(component, key, data[key] || properties[key]?.value || properties[key]?.default);
+                    APLProperties.encode(component, key, data[key] ?? properties[key]?.value ?? properties[key]?.default);
                 }
             }
 
@@ -226,12 +228,65 @@ class APL {
             if (data.data?.type === APLDataComponent.EVENT_DOCUMENT_CHANGED) {
                 let json = data.data?.json;
                 if (json) {
-                    this.aplDom.aplDocument.document = json;
-                    aplLoader.scheme.document = json;
-                    aplLoader.refresh();
+                    this.refreshFromDocument(json);
                 }
             }
         });
+    }
+
+    /**
+     * Schedule a full rebuild from an edited APL document. Debounced because
+     * the JSON editor fires on every keystroke, and queued so a rebuild never
+     * starts while the previous one is still creating components.
+     */
+    refreshFromDocument(json) {
+        clearTimeout(this._refreshTimer);
+        this._refreshTimer = setTimeout(() => {
+            this._refreshQueue = (this._refreshQueue || Promise.resolve())
+                .then(() => this.applyDocument(json))
+                .catch((err) => console.warn('applyDocument failed', err));
+        }, this.constructor.REFRESH_DEBOUNCE_MS);
+    }
+
+    async applyDocument(json) {
+        const selectedPath = this.getComponentPath(this.propertyAdaptor.getComponent());
+        // aplDom.aplDocument and aplLoader.scheme are the same object,
+        // assigned in APLLoader.getLocalJSON
+        this.aplDom.aplDocument.document = json;
+        await this.aplLoader.refresh();
+        const component = this.findComponentByPath(selectedPath);
+        if (component) {
+            this.aplFactory.onSelect(component);
+            this.inspector.objectsSelectorComponent.selectComponent(component);
+        }
+    }
+
+    /**
+     * Tree path (child indexes, root to leaf) survives a rebuild,
+     * unlike guids and generated names.
+     */
+    getComponentPath(component) {
+        if (!component) return null;
+        let item = this.aplDom.findByComponent(component);
+        if (!item) return null;
+        let path = [];
+        while (item) {
+            path.unshift(item.index);
+            item = item.parent;
+        }
+        return path;
+    }
+
+    findComponentByPath(path) {
+        if (!path || path.length === 0) return null;
+        let items = this.aplDom.getItems();
+        let item = null;
+        for (const index of path) {
+            item = items[index];
+            if (!item) return null;
+            items = item.items;
+        }
+        return item?.component || null;
     }
 
     /**
@@ -242,7 +297,7 @@ class APL {
         let properties = component.getAPLProperties();
         let data = component.getAPLData();
         for (const key in properties) {
-            APLProperties.encode(component, key, data[key] || properties[key]?.value || properties[key]?.default);
+            APLProperties.encode(component, key, data[key] ?? properties[key]?.value ?? properties[key]?.default);
         }
     }
 

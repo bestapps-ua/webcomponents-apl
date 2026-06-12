@@ -53,7 +53,7 @@ class APLLoader {
             let properties = component.getAPLProperties();
             let data = component.getAPLData();
             for (const key in properties) {
-                APLProperties.encode(component, key, data[key] || properties[key]?.default);
+                APLProperties.encode(component, key, data[key] ?? properties[key]?.value ?? properties[key]?.default);
             }
 
             this.dom.addByComponent(component, container);
