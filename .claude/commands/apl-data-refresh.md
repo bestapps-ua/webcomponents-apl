@@ -10,6 +10,9 @@ Editing JSON in `apl-data-component` (the jsoneditor panel) triggers a **full te
 
 ```
 jsoneditor onChangeText (fires per keystroke, invalid JSON ignored)
+  -> APLValidator.validate(json)          GATE: errors -> red lines only,
+                                          no event, canvas untouched
+                                          (see apl-validation.md)
   -> APLDataComponent.sendChanged(EVENT_DOCUMENT_CHANGED, {json})
   -> APL.refreshFromDocument(json)        debounce 500ms (APL.REFRESH_DEBOUNCE_MS)
                                           + promise queue (no rebuild mid-rebuild)

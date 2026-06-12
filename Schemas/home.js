@@ -30,7 +30,7 @@ var scheme = {
               "width": "50%",
               "height": "100%",
               "backgroundColor": "#fff",
-              "borderColor": "#fffffff",
+              "borderColor": "#ffffff",
               "item": [
                 {
                   "type": "Image",

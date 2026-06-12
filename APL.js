@@ -221,6 +221,9 @@ class APL {
         let aplDataComponent = document.createElement(APLDataComponent.tag);
         document.getElementById('data').appendChild(aplDataComponent);
         await aplDataComponent.loadedDefer.promise;
+        if (typeof APLValidator !== 'undefined') {
+            aplDataComponent.setValidator(new APLValidator());
+        }
         aplDataComponent.setDocument(this.aplDom.aplDocument.document);
         this.aplDataComponent = aplDataComponent;
 

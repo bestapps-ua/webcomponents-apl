@@ -35,7 +35,10 @@ class APLProperties {
         let property = properties[key];
         const apl = property.options?.apl;
         let aplProperty = apl || key;
-        data[aplProperty] = value;
+        // do not materialize absent properties in the document JSON
+        if (value !== undefined) {
+            data[aplProperty] = value;
+        }
 
         const cssConfig = property.options?.css;
         if (cssConfig) {
@@ -86,7 +89,10 @@ class APLProperties {
                         value = data[key];
                     }
                     if (typeof value === 'undefined') {
-                        value = property.default || '';
+                        // keep undefined when there is no default: coercing to ''
+                        // pollutes property.value and, through the encode fallback
+                        // chain, writes empty strings into the document JSON
+                        value = property.default;
                     }
                     const copy = {};
                     for (const p of Object.keys(property)) {
