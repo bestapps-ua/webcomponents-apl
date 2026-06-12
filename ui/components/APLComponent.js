@@ -217,6 +217,10 @@ class APLComponent extends BestAppsComponent {
         this.items.splice(idx, 1);
     }
 
+    clearItems() {
+        this.items = [];
+    }
+
     async initElements() {
         await super.initElements();
         this.classList.add('apl-component');

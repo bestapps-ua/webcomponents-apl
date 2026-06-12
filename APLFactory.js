@@ -37,6 +37,10 @@ class APLFactory {
         if (idx !== -1) this.items.splice(idx, 1);
     }
 
+    reset() {
+        this.items = [];
+    }
+
     setPalette(palette) {
         this.palette = palette;
     }

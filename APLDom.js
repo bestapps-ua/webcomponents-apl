@@ -20,6 +20,11 @@ class APLDom {
         this.aplDocument = aplDocument;
     }
 
+    reset() {
+        this.items = [];
+        this._guidIndex.clear();
+    }
+
     addByComponent(component, parentComponent = undefined, index = -1) {
         let guid = component.guid;
         let item = {

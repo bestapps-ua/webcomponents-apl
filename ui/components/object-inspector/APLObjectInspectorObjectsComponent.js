@@ -319,6 +319,11 @@ class APLObjectInspectorObjectsComponent extends BestAppsObjectInspectorObjectsC
         await this.initSelect({refresh: true});
     }
 
+    clearOptions() {
+        if (this.selectContainer) this.selectContainer.innerHTML = '';
+        if (this.selectElement) this.selectElement.innerHTML = '';
+    }
+
     onClose() {
         if (this._isDragging) return;
         this.close();

@@ -135,7 +135,13 @@ class APLLoader {
     }
 
     async refresh() {
-        this.container.innerHTML = '';
+        // components live in the container's shadow wrapper, not its light DOM;
+        // removing them runs disconnectedCallback cleanups on each component
+        this.container.element.wrapper.innerHTML = '';
+        this.container.clearItems();
+        this.dom.reset();
+        this.factory.reset();
+        this.factory.getInspector()?.clearComponents();
         await this.loadComponents();
     }
 
