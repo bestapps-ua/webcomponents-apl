@@ -31,7 +31,8 @@ Describe the APLLoader based on the following analysis.
   3. **Data** - raw `component.getAPLData()` -> `APLObjectInspectorDataTabComponent`
 
 ### Refresh
-- `refresh()` - clears the container and reloads all components from the schema
+- `refresh()` - full teardown and rebuild: clears the container's shadow wrapper, resets `APLDom`, `APLFactory`, the container's child-guid list and the inspector registry, then reloads all components from the schema
+- See `apl-data-refresh.md` for the complete data-edit pipeline and the state invariants refresh must maintain
 
 ## Pros
 - Clean recursive tree builder handles arbitrary nesting depth
