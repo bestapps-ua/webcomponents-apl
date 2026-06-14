@@ -1,6 +1,6 @@
 {
   "name": "@bestapps/webcomponents-apl",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "BestApps APL Web Components",
   "homepage": "https://github.com/bestapps-ua/webcomponents-apl",
   "repository": {
@@ -16,7 +16,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@bestapps/webcomponents": "^0.0.4"
+    "@bestapps/webcomponents": "^0.0.5"
   },
   "scripts": {
     "build": "node build.js",
