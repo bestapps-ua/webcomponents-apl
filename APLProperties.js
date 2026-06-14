@@ -118,24 +118,28 @@ class APLProperties {
         return {
             left: {
                 type: 'dimension',
-                options: {
-                }
+                options: {}
             },
             top: {
                 type: 'dimension',
-                options: {
-                }
+                options: {}
             },
             right: {
                 type: 'dimension',
-                options: {
-                }
+                options: {}
             },
             bottom: {
                 type: 'dimension',
-                options: {
-                }
-            }
+                options: {}
+            },
+            start: {
+                type: 'dimension',
+                options: {}
+            },
+            end: {
+                type: 'dimension',
+                options: {}
+            },
         }
     }
     static getContainerProperties() {
@@ -145,11 +149,55 @@ class APLProperties {
                 items: [
                     'relative',
                     'absolute',
+                    'sticky',
                 ],
                 default: 'relative',
                 options: {
                     css: true,
                 }
+            },
+            alignSelf: {
+                type: 'list',
+                items: [
+                    'auto',
+                    'start',
+                    'end',
+                    'center',
+                    'baseline',
+                    'stretch',
+                ],
+                default: 'auto',
+                options: {
+                    css: true,
+                }
+            },
+            grow: {
+                type: 'text',
+                default: '0',
+                options: {
+                    css: 'flexGrow',
+                }
+            },
+            shrink: {
+                type: 'text',
+                default: '0',
+                options: {
+                    css: 'flexShrink',
+                }
+            },
+            spacing: {
+                type: 'dimension',
+                options: {}
+            },
+            numbering: {
+                type: 'list',
+                items: [
+                    'normal',
+                    'skip',
+                    'reset',
+                ],
+                default: 'normal',
+                options: {}
             },
         }
     }

@@ -62,12 +62,10 @@ class APLContainerComponent extends APLMultiChildComponent {
                     css: true,
                 }
             },
-            shadowColor: {
-                type: 'color',
-                options: {
-
-                }
-            }
+            numbered: {
+                type: 'text',
+                options: {}
+            },
         });
         properties = Object.assign(APLProperties.getContainerProperties(), properties);
         properties = Object.assign(APLProperties.getAlignmentAndPositioningProperties(), properties);

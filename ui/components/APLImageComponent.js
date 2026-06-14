@@ -42,10 +42,31 @@ class APLImageComponent extends APLComponent {
                     visual: 'scale-picker',
                 }
             },
+            filters: {
+                type: 'text',
+                options: {}
+            },
+            overlayColor: {
+                type: 'color',
+                options: {}
+            },
+            overlayGradient: {
+                type: 'text',
+                options: {}
+            },
         });
         properties = Object.assign(APLProperties.getContainerProperties(), properties);
         properties = Object.assign(APLProperties.getAlignmentAndPositioningProperties(), properties);
         return properties;
+    }
+
+    getAPLEvents() {
+        let events = super.getAPLEvents();
+        events = Object.assign(events, {
+            onLoad: { type: 'commands', options: {} },
+            onFail: { type: 'commands', options: {} },
+        });
+        return events;
     }
 
     static SVG_NS = 'http://www.w3.org/2000/svg';

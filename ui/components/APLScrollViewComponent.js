@@ -12,6 +12,18 @@ class APLScrollViewComponent extends APLActionableComponent {
         return properties;
     }
 
+    getAPLEvents() {
+        let events = super.getAPLEvents();
+        events = Object.assign(events, {
+            onScroll: {
+                type: 'commands',
+                options: {
+                }
+            },
+        });
+        return events;
+    }
+
     getStyle() {
         let style = super.getStyle();
         style += `

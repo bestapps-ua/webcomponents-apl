@@ -103,10 +103,129 @@ class APLComponent extends BestAppsComponent {
                 css: true,
             }
         },
+        paddingStart: {
+            type: 'dimension',
+            options: {
+                css: 'paddingInlineStart',
+            }
+        },
+        paddingEnd: {
+            type: 'dimension',
+            options: {
+                css: 'paddingInlineEnd',
+            }
+        },
+        opacity: {
+            type: 'text',
+            options: {
+                css: true,
+            }
+        },
+        display: {
+            type: 'list',
+            items: [
+                'normal',
+                'invisible',
+                'none',
+            ],
+            default: 'normal',
+            options: {}
+        },
+        layoutDirection: {
+            type: 'list',
+            items: [
+                'LTR',
+                'RTL',
+                'inherit',
+            ],
+            default: 'inherit',
+            options: {
+                css: 'direction',
+            }
+        },
+        pointerEvents: {
+            type: 'list',
+            items: [
+                'auto',
+                'none',
+            ],
+            options: {
+                css: true,
+            }
+        },
+        shadowColor: {
+            type: 'color',
+            options: {}
+        },
+        shadowHorizontalOffset: {
+            type: 'dimension',
+            options: {}
+        },
+        shadowVerticalOffset: {
+            type: 'dimension',
+            options: {}
+        },
+        shadowRadius: {
+            type: 'dimension',
+            options: {}
+        },
+        transform: {
+            type: 'text',
+            options: {}
+        },
+        disabled: {
+            type: 'text',
+            options: {}
+        },
+        checked: {
+            type: 'text',
+            options: {}
+        },
+        inheritParentState: {
+            type: 'text',
+            options: {}
+        },
+        when: {
+            type: 'text',
+            options: {}
+        },
+        description: {
+            type: 'text',
+            options: {}
+        },
+        accessibilityLabel: {
+            type: 'text',
+            options: {}
+        },
+        role: {
+            type: 'text',
+            options: {}
+        },
 
     }
 
-    APLEvents = {};
+    APLEvents = {
+        onMount: {
+            type: 'commands',
+            options: {}
+        },
+        onCursorEnter: {
+            type: 'commands',
+            options: {}
+        },
+        onCursorExit: {
+            type: 'commands',
+            options: {}
+        },
+        onCursorMove: {
+            type: 'commands',
+            options: {}
+        },
+        onLayout: {
+            type: 'commands',
+            options: {}
+        },
+    };
 
     onCSSSet() {
         let data = this.getAPLData();
@@ -134,6 +253,47 @@ class APLComponent extends BestAppsComponent {
             if (parseFloat(data.bottom) > 0) {
                 this.style['bottom'] = screen.getSizePixels(data.bottom, parent?.offsetHeight);
             }
+        }
+
+        if (data.display === 'invisible') {
+            this.style.visibility = 'hidden';
+            this.style.display = '';
+        } else if (data.display === 'none') {
+            this.style.display = 'none';
+        } else {
+            this.style.visibility = '';
+            this.style.display = '';
+        }
+
+        if (data.shadowColor) {
+            let screen = this.getFactory().getScreen();
+            let sh = screen.getSizePixels(data.shadowHorizontalOffset || 0, w);
+            let sv = screen.getSizePixels(data.shadowVerticalOffset || 0, h);
+            let sr = screen.getSizePixels(data.shadowRadius || 0, w);
+            this.style.boxShadow = `${sh} ${sv} ${sr} ${data.shadowColor}`;
+        } else {
+            this.style.boxShadow = '';
+        }
+
+        if (Array.isArray(data.transform) && data.transform.length) {
+            let screen = this.getFactory().getScreen();
+            let parts = [];
+            for (const t of data.transform) {
+                for (const [fn, val] of Object.entries(t)) {
+                    if (fn === 'rotate' || fn === 'skewX' || fn === 'skewY') {
+                        parts.push(`${fn}(${val}deg)`);
+                    } else if (fn === 'translateX') {
+                        parts.push(`translateX(${screen.getSizePixels(val, w)})`);
+                    } else if (fn === 'translateY') {
+                        parts.push(`translateY(${screen.getSizePixels(val, h)})`);
+                    } else {
+                        parts.push(`${fn}(${val})`);
+                    }
+                }
+            }
+            this.style.transform = parts.join(' ');
+        } else {
+            this.style.transform = '';
         }
     }
 
@@ -238,7 +398,7 @@ class APLComponent extends BestAppsComponent {
             :host {
                 box-sizing: border-box;
                 background-color: white;
-                flex: 1 0;
+                flex: 1 0 auto;
             }
             :host(.selected) {
                 border: 1px solid red;

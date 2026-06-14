@@ -6,9 +6,6 @@ class APLTouchWrapperComponent extends APLTouchableComponent {
 
     getAPLProperties() {
         let properties = super.getAPLProperties();
-        properties = Object.assign(properties, {
-
-        });
         properties = Object.assign(APLProperties.getContainerProperties(), properties);
         properties = Object.assign(APLProperties.getAlignmentAndPositioningProperties(), properties);
         return properties;

@@ -32,6 +32,26 @@ class APLFrameComponent extends APLComponent {
                 type: 'dimension',
                 options: {}
             },
+            borderBottomLeftRadius: {
+                type: 'dimension',
+                options: { css: true }
+            },
+            borderBottomRightRadius: {
+                type: 'dimension',
+                options: { css: true }
+            },
+            borderTopLeftRadius: {
+                type: 'dimension',
+                options: { css: true }
+            },
+            borderTopRightRadius: {
+                type: 'dimension',
+                options: { css: true }
+            },
+            borderStrokeWidth: {
+                type: 'dimension',
+                options: {}
+            },
         });
 
         properties = Object.assign(APLProperties.getContainerProperties(), properties);
