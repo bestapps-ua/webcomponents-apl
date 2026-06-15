@@ -12,7 +12,7 @@ Describe how APL documents are validated in the data editor, based on the follow
 ## Where the Rules Come From
 
 - **Introspection** (`APLValidator.getSpecs()`): for every type in `APLComponentRegistry`, a throwaway element is created and its `getAPLProperties()` read. Property types (`dimension`, `color`, `list`, text) and enum values (e.g. Image `scale`, Container `direction`) therefore can never drift from the components. Keys are mapped to JSON names via `options.apl` (`name` -> `id`). List items that are `{cssValue: aplValue}` objects contribute the APL value.
-- **`APLValidationRules`**: structure and formats encoded from the official APL docs (URLs inline): children model per type (Text/Image/EditText are leaves), required properties (`Image.source`), dimension format (number | `auto` | `<n>dp/px/vw/vh/%`), colors via `CSS.supports('color', ...)`.
+- **`APLValidationRules`**: structure and formats encoded from the official APL docs (URLs inline): children model per type (leaves: Text, Image, EditText, **VectorGraphic, Video**; containers/scrollables that allow children: Container, Frame, ScrollView, TouchWrapper, **Sequence, FlexSequence, GridSequence, Pager**), required properties (`Image.source`, **`VectorGraphic.source`, `Video.source`**), dimension format (number | `auto` | `<n>dp/px/vw/vh/%`), colors via `CSS.supports('color', ...)`. Note `getContainerProperties().position` is `relative`/`absolute` only (no `sticky` — that was a non-APL value removed from the code).
 
 ## Error Model
 
@@ -25,7 +25,7 @@ Describe how APL documents are validated in the data editor, based on the follow
 ## Hard-Won Invariants
 
 - **`APLProperties.decode` must not coerce missing values to `''`** and **`encode` must not write `undefined` into data** — both polluted the document JSON (empty strings / phantom keys) and produced hundreds of false validation errors. The validator first shipped against a document with 205 of them.
-- The base inspector's `renderValue`/`refreshValue` must handle `undefined`/`0`/`''` with nullish checks — `innerHTML = undefined` renders the literal string "undefined".
+- The base inspector's `renderValue`/`refreshValue` must handle `undefined`/`0`/`''` with nullish checks — `innerHTML = undefined` renders the literal string "undefined". The same applies to the **edit field**: `initInput` must use `fieldEl.value = this.value ?? ''` and commit guards must treat `undefined`/`null`/`''` as equal (`isUnchangedValue`), or clicking an empty property commits the string "undefined". See `/apl-inspector`.
 - The validator found a real shipped bug on day one: `Schemas/home.js` had `borderColor: "#fffffff"` (7-digit hex). If a baseline document suddenly reports errors, suspect the document first.
 - `validate()` must never throw (wrapped in try/catch returning `[]`) — it runs inside jsoneditor's validation promise chain on every keystroke.
 

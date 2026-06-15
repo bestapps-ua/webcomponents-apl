@@ -1,0 +1,33 @@
+import { browser } from '@wdio/globals';
+import { APLComponentFixture } from './APLComponentFixture';
+
+export class APLFlexSequenceFixture extends APLComponentFixture {
+    async wrapperStyle(property: string): Promise<string> {
+        return browser.execute((sel: string, prop: string) => {
+            const el = document.querySelector(sel) as any;
+            const wrapper = el?.shadowRoot?.querySelector('.wrapper');
+            if (!wrapper) return '';
+            return getComputedStyle(wrapper)[prop as any];
+        }, this.selector, property);
+    }
+
+    testFlexSequence() {
+        this.testBase();
+        this.testHasProperties(['data', 'alignItems', 'scrollDirection', 'snap', 'numbered', 'preserve']);
+        this.testHasEvents([
+            'onMount',
+            'onChildrenChanged',
+            'onFocus',
+            'onBlur',
+            'handleKeyDown',
+            'handleKeyUp',
+            'onScroll',
+        ]);
+        this.testPropertyType('scrollDirection', 'list');
+        this.testPropertyType('alignItems', 'list');
+        this.testPropertyType('snap', 'list');
+        this.testPropertyDefault('scrollDirection', 'vertical');
+        this.testPropertyDefault('alignItems', 'start');
+        this.testPropertyDefault('snap', 'none');
+    }
+}
