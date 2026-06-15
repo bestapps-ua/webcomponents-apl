@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>APL Property Groups Test</title></head>
+<body>
+<script src="/webcomponents/utils/uid.js"></script>
+<script src="/webcomponents/utils/APLComponentRegistry.js"></script>
+<script src="/webcomponents/BestAppsComponent.js"></script>
+<script src="/webcomponents/custom/ObjectInspector/tab/BestAppsObjectInspectorTabComponent.js"></script>
+<script src="/webcomponents/custom/ObjectInspector/tab/Property/BestAppsObjectInspectorPropertyComponent.js"></script>
+<script src="/webcomponents/custom/ObjectInspector/tab/Property/BestAppsObjectInspectorPropertyInputComponent.js"></script>
+<script src="/webcomponents/custom/ObjectInspector/tab/Property/BestAppsObjectInspectorPropertyListComponent.js"></script>
+<script src="/webcomponents/custom/ObjectInspector/tab/Property/BestAppsObjectInspectorPropertyArrayComponent.js"></script>
+<script src="/webcomponents/custom/ObjectInspector/tab/Property/BestAppsObjectInspectorPropertiesTabComponent.js"></script>
+<script src="/webcomponents-apl/ui/components/object-inspector/tab/property/APLObjectInspectorPropertyScaleComponent.js"></script>
+<script src="/webcomponents-apl/ui/components/object-inspector/tab/property/APLPropertyGroups.js"></script>
+<script src="/webcomponents-apl/ui/components/object-inspector/tab/property/APLObjectInspectorPropertyGroupComponent.js"></script>
+<script src="/webcomponents-apl/ui/components/object-inspector/tab/property/APLObjectInspectorPropertiesTabComponent.js"></script>
+<div id="container"></div>
+<script>
+  // Sample property set: a Frame-like component with a name, two grouped
+  // families (Size has 4 members, Padding has 3), a lone Border member
+  // (borderRadius only -> should fall back to standalone), and one ungrouped.
+  window.__makeTab = async function (props) {
+    document.getElementById('container').innerHTML = '';
+    const tab = document.createElement('apl-object-inspector-properties-tab-component');
+    tab.id = 'tab1';
+    await tab.setOptions({ tabName: 'Properties', properties: props });
+    document.getElementById('container').appendChild(tab);
+    await tab.loadedDefer.promise;
+    return tab;
+  };
+</script>
+</body>
+</html>

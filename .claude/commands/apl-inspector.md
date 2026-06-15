@@ -16,7 +16,13 @@ Extends `BestAppsObjectInspectorObjectsComponent`. Replaces the `<select>` dropd
 - Dropdown opens/closes on click (absolute positioned, 500px wide, 300px tall)
 - Component drag-and-drop reordering within the tree
 - Auto-scrolls to selected component
-- Persists last selected component name in `localStorage`
+- Persists last selected component name in `localStorage`, restored **once after
+  initial load** via `restorePersistedSelection()` (called from `APL.init` after
+  `aplLoader.load()`). Previously this restore lived inside `addComponent` and
+  ran on *every* add — so dragging in a new component re-asserted the stored
+  selection and left the freshly dropped component **inactive** in the inspector.
+  `restorePersistedSelection()` enqueues via `addEvent` so it runs after pending
+  option-adds have flushed.
 - Renames components live when name changes in Properties tab
 - Rebuilds tree after component moves via `EVENT_MOVED` subscription
 - Click outside the inspector closes the dropdown
@@ -25,6 +31,38 @@ Extends `BestAppsObjectInspectorObjectsComponent`. Replaces the `<select>` dropd
 - Options are draggable (except the root APLContainer1)
 - Drag data format: `OPTION::<guid>`
 - Drop triggers `APLDom.move()` -> `APLFactory.cloneByDomItemsMove()`
+
+### APLObjectInspectorPropertiesTabComponent (`apl-object-inspector-properties-tab-component`) — grouped, sorted, collapsible
+Extends `BestAppsObjectInspectorPropertiesTabComponent`. Overrides
+`getClassByProperty()` (scale-picker) and, more importantly, `layoutProperties()`
+to render properties as **collapsible groups** instead of a flat list:
+
+- All keys sorted alphabetically; `name` pinned first; then group sections
+  (titles A–Z, members A–Z); then remaining standalone rows (A–Z).
+- Grouping comes from `APLPropertyGroups` (`APLPropertyGroups.js`) — a
+  property→group taxonomy covering every APL property (Size, Padding, Position,
+  Layout, Border, Shadow, Typography, Hint, Input, Media, Appearance, Scrolling,
+  Accessibility, State, Data).
+- A group only forms when `MIN_GROUP_SIZE` (2) of its members are present for the
+  selected component; otherwise its members render as standalone rows.
+- `update()` refreshes each group's summary after value changes.
+
+**Base refactor enabling this:** `BestAppsObjectInspectorPropertiesTabComponent`
+was split into `createPropertyComponent(key, prop)` (builds a row + wires
+`EVENT_ACTIVATE`/`EVENT_CHANGED`) and an overridable `layoutProperties(items)`
+hook (default = flat list, unchanged for other consumers).
+
+### APLObjectInspectorPropertyGroupComponent (`apl-object-inspector-property-group-component`)
+A collapsible group: header `[+]/[-]` toggle + title + live summary, and a body
+holding the member rows.
+- **Summary** lists `name: value` for members whose value is non-empty AND
+  differs from its default; updates live (subscribes to each member's
+  `EVENT_CHANGED`).
+- **Collapsed by default**; open/closed state persisted per title in
+  `localStorage`.
+- The tab `await`s each group's `loadedDefer` before `addProperty()` so the
+  group's async `initElements` (which builds `bodyEl`) has run — otherwise rows
+  would be appended to an undefined body.
 
 ### APLObjectInspectorEventsTabComponent (`apl-object-inspector-events-tab-component`)
 Extends `BestAppsObjectInspectorPropertiesTabComponent`. Overrides `getClassByProperty()` to use `APLObjectInspectorPropertyCommandComponent` for `commands` type properties. Implements `onCommandOpen()` to close other command editors when one opens.
@@ -47,6 +85,18 @@ Extends `BestAppsObjectInspectorPropertiesTabComponent`. Popup editor for a sing
 - Property editors for command fields
 - CLOSE and SAVE action buttons
 Fires `EVENT_ACTION_CLOSE` and `EVENT_ACTION_SAVE` events.
+
+## Property row editing (base `webcomponents` fix)
+Clicking a property value used to commit the literal string `"undefined"` for
+properties with no value, because `initInput` did `fieldEl.value = this.value`
+(which the input coerces to `"undefined"`). Fixed in the shared base components:
+- `BestAppsObjectInspectorPropertyInputComponent.initInput`: `fieldEl.value = this.value ?? ''`.
+- `BestAppsObjectInspectorPropertyComponent.isUnchangedValue()` normalizes
+  `undefined`/`null`/`''` as equal; used in `onDeactivate` (blur) and the
+  input's Enter/Escape handlers so clicking into an empty field and leaving
+  commits nothing.
+- `deactivate()` now calls `refreshValue()` to restore the value text instead of
+  leaving the inert edit field in the cell.
 
 ## Pros
 - Tree selector provides hierarchical view matching APL document structure
