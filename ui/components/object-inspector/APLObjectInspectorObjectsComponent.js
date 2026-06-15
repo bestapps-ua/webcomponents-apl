@@ -77,15 +77,25 @@ class APLObjectInspectorObjectsComponent extends BestAppsObjectInspectorObjectsC
         });
     }
 
-    addComponent(component) {
-
-        super.addComponent(component);
-        let name = localStorage.getItem(`${APLObjectInspectorObjectsComponent.tag}.${window.location.pathname}.component`);
-        let currentComponent = this.findComponentByName(name);
-        if (currentComponent) {
-            this.sendChanged(BestAppsObjectInspectorObjectsComponent.EVENT_CHANGED_COMPONENT, {toComponent: currentComponent});
-            this.selectComponent(currentComponent);
-        }
+    /**
+     * Re-select the component persisted from the previous session. Call this
+     * ONCE after the initial schema load — never per-add. Doing it inside
+     * addComponent re-asserts the stored component on every add (including a
+     * fresh drag-and-drop), which hijacks selection away from the just-dropped
+     * component, leaving it inactive in the inspector.
+     *
+     * Enqueued via addEvent so it runs after all the load's pending option-add
+     * events have flushed (otherwise the component/option may not exist yet).
+     */
+    restorePersistedSelection() {
+        this.addEvent(async () => {
+            const name = localStorage.getItem(`${APLObjectInspectorObjectsComponent.tag}.${window.location.pathname}.component`);
+            if (!name) return;
+            const component = this.findComponentByName(name);
+            if (!component) return;
+            await this.sendChanged(BestAppsObjectInspectorObjectsComponent.EVENT_CHANGED_COMPONENT, {toComponent: component});
+            this.selectComponent(component);
+        });
     }
 
     addOption(component) {

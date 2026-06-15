@@ -218,6 +218,11 @@ class APL {
 
         await aplLoader.load();
 
+        // Restore the previously selected component once, after the initial
+        // load. This used to happen inside objectsSelector.addComponent on every
+        // add, which hijacked selection away from freshly dropped components.
+        this.inspector.objectsSelectorComponent.restorePersistedSelection();
+
         let aplDataComponent = document.createElement(APLDataComponent.tag);
         document.getElementById('data').appendChild(aplDataComponent);
         await aplDataComponent.loadedDefer.promise;

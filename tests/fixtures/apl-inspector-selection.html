@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>APL Inspector Selection Test</title></head>
+<body>
+<script src="/webcomponents/utils/uid.js"></script>
+<script src="/webcomponents/utils/APLComponentRegistry.js"></script>
+<script src="/webcomponents/BestAppsComponent.js"></script>
+<script src="/webcomponents/custom/ObjectInspector/BestAppsObjectInspectorComponent.js"></script>
+<script src="/webcomponents/custom/ObjectInspector/BestAppsObjectInspectorObjectsComponent.js"></script>
+<script src="/webcomponents/custom/ObjectInspector/tab/BestAppsObjectInspectorTabComponent.js"></script>
+<script src="/webcomponents/custom/ObjectInspector/tab/BestAppsObjectInspectorTabsComponent.js"></script>
+<script src="/webcomponents-apl/APLProperties.js"></script>
+<script src="/webcomponents-apl/ui/components/APLComponent.js"></script>
+<script src="/webcomponents-apl/ui/components/APLFrameComponent.js"></script>
+<script src="/webcomponents-apl/ui/components/object-inspector/APLObjectInspectorObjectsComponent.js"></script>
+<div id="container"></div>
+<script>
+  window.__storageKey = function () {
+    return `apl-object-inspector-objects-component.${location.pathname}.component`;
+  };
+  window.__makeObjs = async function () {
+    localStorage.clear();
+    document.getElementById('container').innerHTML = '';
+    const objs = document.createElement('apl-object-inspector-objects-component');
+    await objs.setOptions({ nameAttribute: 'apl-name', typeAttribute: 'apl-type', uidAttribute: 'guid', tabs: [] });
+    document.getElementById('container').appendChild(objs);
+    await objs.loadedDefer.promise;
+    objs.setContext({ aplDom: {}, aplFactory: { onSelect() {} }, viewComponent() {} });
+    return objs;
+  };
+  window.__mkComp = async function (name) {
+    const c = document.createElement('apl-frame-component');
+    c.setAPLType('APLFrame');
+    c.setAPLName(name);
+    document.getElementById('container').appendChild(c);
+    await c.loadedDefer.promise;
+    return c;
+  };
+  window.__selectedOptionValue = function (objs) {
+    const opt = objs.selectContainer.querySelector('.select-option.selected');
+    return opt ? opt.getAttribute('value') : null;
+  };
+</script>
+</body>
+</html>
