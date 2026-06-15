@@ -18,17 +18,31 @@ class APLTextComponent extends APLComponent {
             },
             fontSize: {
                 type: 'dimension',
+                default: '40dp',
                 options: {
                     css: true,
                 }
             },
             fontStyle: {
-                type: 'text',
+                type: 'list',
+                items: [
+                    'normal',
+                    'italic',
+                ],
+                default: 'normal',
                 options: {
                     css: true,
                 }
             },
             fontWeight: {
+                type: 'text',
+                default: 'normal',
+                options: {
+                    css: true,
+                }
+            },
+            // BCP-47 language code (e.g. "en-US"); affects glyph selection.
+            lang: {
                 type: 'text',
                 options: {
                     css: true,
@@ -59,13 +73,29 @@ class APLTextComponent extends APLComponent {
                 }
             },
             textAlign: {
-                type: 'text',
+                type: 'list',
+                items: [
+                    'auto',
+                    'left',
+                    'right',
+                    'center',
+                    'start',
+                    'end',
+                ],
+                default: 'auto',
                 options: {
                     css: true,
                 }
             },
             textAlignVertical: {
-                type: 'text',
+                type: 'list',
+                items: [
+                    'auto',
+                    'top',
+                    'bottom',
+                    'center',
+                ],
+                default: 'auto',
                 options: {
 
                 }
@@ -76,12 +106,20 @@ class APLTextComponent extends APLComponent {
         return properties;
     }
 
+    getAPLEvents() {
+        let events = super.getAPLEvents();
+        events = Object.assign(events, {
+            onTextLayout: { type: 'commands', options: {} },
+        });
+        return events;
+    }
+
     onCSSSet() {
         super.onCSSSet();
         let data = this.getAPLData();
         let screen = this.getFactory().getScreen();
         let div = this.element.wrapper.querySelector('div');
-        if (data.height === 'auto' && div) {
+        if (data.height === 'auto' && div && data.fontSize) {
             let fontSize = data.fontSize;
             if (fontSize.includes('dp')) {
                 fontSize = parseFloat(fontSize) * screen.getDPSize();

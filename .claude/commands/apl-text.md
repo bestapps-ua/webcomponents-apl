@@ -13,26 +13,34 @@ https://developer.amazon.com/en-US/docs/alexa/alexa-presentation-language/apl-te
 
 ## Additional Properties (beyond APLComponent base)
 
-| Property | Type | CSS Mapping | Notes |
-|---|---|---|---|
-| `color` | color | `color` | Text color |
-| `fontFamily` | text | `fontFamily` | Font family |
-| `fontSize` | dimension | `fontSize` | Font size with dp support |
-| `fontStyle` | text | - | italic/normal (no CSS mapping) |
-| `fontWeight` | text | `fontWeight` | bold/normal/100-900 |
-| `letterSpacing` | text | - | No CSS mapping |
-| `lineHeight` | dimension | - | No CSS mapping |
-| `maxLines` | text | - | No CSS mapping |
-| `text` | text | - | The actual text content |
-| `textAlign` | text | - | No CSS mapping |
-| `textAlignVertical` | text | - | No CSS mapping |
-| `position` | list | `position` | From `getContainerProperties()` |
-| `left/top/right/bottom` | dimension | - | From `getAlignmentAndPositioningProperties()` |
+Brought to full spec parity: `textAlign`/`textAlignVertical`/`fontStyle` are now
+`list` (enum) types with proper CSS mappings, `lang` and the `onTextLayout`
+handler were added, and documented defaults are set.
+
+| Property | Type | Default | CSS Mapping | Notes |
+|---|---|---|---|---|
+| `color` | color | - | `color` | Theme-dependent default left unset |
+| `fontFamily` | text | - | `fontFamily` | |
+| `fontSize` | dimension | `40dp` | `fontSize` | dp support |
+| `fontStyle` | list (normal/italic) | `normal` | `fontStyle` | |
+| `fontWeight` | text | `normal` | `fontWeight` | normal/bold/100-900 (kept text for numeric) |
+| `lang` | text | - | `lang` | BCP-47 language code |
+| `letterSpacing` | text | - | `letterSpacing` | |
+| `lineHeight` | dimension | - | `lineHeight` | 125% default left unset (dim path) |
+| `maxLines` | text | - | - | |
+| `text` | text | - | - | The actual text content |
+| `textAlign` | list (auto/left/right/center/start/end) | `auto` | `textAlign` | |
+| `textAlignVertical` | list (auto/top/bottom/center) | `auto` | - | data-only |
+| `position` | list | - | `position` | From `getContainerProperties()` |
+| `left/top/right/bottom` | dimension | - | - | From `getAlignmentAndPositioningProperties()` |
+
+## Events
+Adds `onTextLayout` (via a `getAPLEvents()` merge that preserves base events).
 
 ## Custom `onCSSSet` Logic
 
 Handles `height: auto` by:
-1. Getting `fontSize` from APL data
+1. Getting `fontSize` from APL data (guarded: skips when `fontSize` is undefined — previously `data.fontSize.includes('dp')` could throw)
 2. Converting dp to pixels using `screen.getDPSize()`
 3. Setting the inner `<div>` height and host `maxHeight` to the computed font size
 
@@ -46,7 +54,8 @@ The component's `renderContent()` method creates a `<div>` with `textContent` an
 - Custom `auto` height handling adapts text to its font size
 
 ## Cons
-- Many typography properties have no CSS mapping (Feature Gap): `fontStyle`, `letterSpacing`, `lineHeight`, `maxLines`, `textAlign`, `textAlignVertical` - these are defined but don't actually affect rendering
+- `textAlignVertical` has no CSS mapping (no single CSS property fits) — defined but does not affect rendering
+- `color`/`lineHeight` defaults left unset on purpose (theme-dependent color; lineHeight's % multiplier doesn't fit the dimension pixel-conversion path) — setting them would materialize values into the document JSON
 - `auto` height calculation assumes single-line text (uses fontSize as height)
 - No rich text / HTML rendering support (Feature Gap: APL supports limited HTML in text)
 
