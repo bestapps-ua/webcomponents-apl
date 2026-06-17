@@ -16,7 +16,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@bestapps/webcomponents": "^0.0.6"
+    "@bestapps/webcomponents": "^0.0.7"
   },
   "scripts": {
     "build": "node build.js",
