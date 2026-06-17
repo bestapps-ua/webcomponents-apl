@@ -170,6 +170,57 @@ describe('APLValidator', () => {
         expect(paths).toContain('mainTemplate.items.2.color');
     });
 
+    it('validateNode flags a bad value on a bare component node (inspector Data tab)', async () => {
+        const errors = await browser.execute(() => {
+            return (window as any).validator.validateNode({ type: 'Text', text: 'x', height: 'aaa' });
+        });
+        expect(errors).toHaveLength(1);
+        expect(errors[0].path).toEqual(['height']);
+        expect(errors[0].message).toContain('dimension');
+    });
+
+    it('validateNode accepts a valid bare component node', async () => {
+        const errors = await browser.execute(() => {
+            return (window as any).validator.validateNode({ type: 'Text', text: 'x', height: '100%', color: '#fff' });
+        });
+        expect(errors).toEqual([]);
+    });
+
+    it('validateNode validates a full document too', async () => {
+        const errors = await browser.execute(() => {
+            return (window as any).validator.validateNode({
+                mainTemplate: { items: [{ type: 'Frame', width: '10potato' }] },
+            });
+        });
+        expect(errors).toHaveLength(1);
+        expect(errors[0].path).toEqual(['mainTemplate', 'items', 0, 'width']);
+    });
+
+    it('validateNode ignores JSON it cannot classify', async () => {
+        const errors = await browser.execute(() => {
+            return (window as any).validator.validateNode({ foo: 'bar', height: 'aaa' });
+        });
+        expect(errors).toEqual([]);
+    });
+
+    it('flags a malformed when expression on a node', async () => {
+        const errors = await browser.execute(() => {
+            return (window as any).validator.validateNode({ type: 'Text', text: 'x', when: '${viewport.width <}' });
+        });
+        expect(errors).toHaveLength(1);
+        expect(errors[0].path).toEqual(['when']);
+        expect(errors[0].message).toContain('expression');
+    });
+
+    it('accepts a valid when and ${} property values (data binding)', async () => {
+        const errors = await browser.execute(() => {
+            return (window as any).validator.validateNode({
+                type: 'Frame', width: '${data.w}', when: '${viewport.width < 600}',
+            });
+        });
+        expect(errors).toEqual([]);
+    });
+
     it('should ignore undefined values (in-memory documents)', async () => {
         const errors = await browser.execute(() => {
             const doc: any = { mainTemplate: { items: [{ type: 'Frame' }] } };

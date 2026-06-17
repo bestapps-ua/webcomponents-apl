@@ -36,6 +36,14 @@ class APLObjectInspectorDataTabComponent extends BestAppsObjectInspectorProperti
                 });
             }),
         }
+        // Validate edited values against the APL data-type rules so a bad value
+        // (e.g. height 'aaa') shows red with an explanation in the tree editor.
+        // Reuses APLValidator/APLValidationRules - the same rules as the
+        // Properties tab and APLProperties.encode.
+        if (typeof APLValidator !== 'undefined') {
+            const validator = new APLValidator();
+            options.onValidate = (json) => validator.validateNode(json);
+        }
         this.jsoneditor = new JSONEditor(div, options, this.data);
     }
 

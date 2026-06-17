@@ -8,7 +8,24 @@ class APLObjectInspectorPropertiesTabComponent extends BestAppsObjectInspectorPr
         if (property.options?.visual === 'scale-picker') {
             cls = APLObjectInspectorPropertyScaleComponent;
         }
+        if (property.options?.visual === 'condition') {
+            cls = APLObjectInspectorPropertyConditionComponent;
+        }
         return cls;
+    }
+
+    /**
+     * Validate property values against the APL data-type rules so invalid
+     * entries (e.g. width 'potato', a malformed color) show red in the
+     * inspector with an explanation. Reuses APLValidationRules.checkValue, the
+     * same path as document validation and APLProperties.encode. Returns null
+     * when the rules aren't loaded so the inspector degrades gracefully.
+     */
+    getValidator() {
+        if (typeof APLValidationRules === 'undefined') {
+            return null;
+        }
+        return (name, value, property) => APLValidationRules.checkValue(name, value, property);
     }
 
     /**

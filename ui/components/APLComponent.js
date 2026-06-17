@@ -186,8 +186,10 @@ class APLComponent extends BestAppsComponent {
             options: {}
         },
         when: {
-            type: 'text',
-            options: {}
+            type: 'expression',
+            options: {
+                visual: 'condition',
+            }
         },
         description: {
             type: 'text',

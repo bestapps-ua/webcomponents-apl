@@ -49,6 +49,34 @@ class APLValidator {
         }
     }
 
+    /**
+     * Validate either a full APL document (has mainTemplate) or a single
+     * component node (e.g. {type: 'Text', height: '...'}), returning errors in
+     * jsoneditor's onValidate shape: [{path, message}]. Used by the inspector
+     * Data tab, whose JSON is the selected component's node, not a whole
+     * document. Returns [] for JSON we can't classify so arbitrary edits aren't
+     * spuriously flagged.
+     */
+    validateNode(node) {
+        try {
+            if (!node || typeof node !== 'object' || Array.isArray(node)) {
+                return [];
+            }
+            if (node.mainTemplate) {
+                return this._validate(node);
+            }
+            if (typeof node.type === 'string' && this.getSpecs()[node.type]) {
+                const errors = [];
+                this._validateComponent(node, [], errors);
+                return errors;
+            }
+            return [];
+        } catch (err) {
+            console.warn('APLValidator.validateNode failed', err);
+            return [];
+        }
+    }
+
     _validate(json) {
         const errors = [];
         if (!json || typeof json !== 'object' || Array.isArray(json)) {
@@ -132,28 +160,9 @@ class APLValidator {
     }
 
     _validateValue(key, value, property, path, errors) {
-        switch (property.type) {
-            case 'dimension':
-                if (!APLValidationRules.isDimension(value)) {
-                    errors.push({path, message: `'${key}' must be a dimension: a number, 'auto' or '<n>dp|px|vw|vh|%'`});
-                }
-                break;
-            case 'color':
-                if (!APLValidationRules.isColor(value)) {
-                    errors.push({path, message: `'${key}' must be a color (#hex, rgb(), hsl() or a named color)`});
-                }
-                break;
-            case 'list': {
-                const allowed = APLValidationRules.listValues(property);
-                if (!allowed.includes(value)) {
-                    errors.push({path, message: `'${key}' must be one of: ${allowed.join(', ')}`});
-                }
-                break;
-            }
-            default:
-                if (!APLValidationRules.isText(value)) {
-                    errors.push({path, message: `'${key}' must be a string, number or boolean`});
-                }
+        const message = APLValidationRules.checkValue(key, value, property);
+        if (message) {
+            errors.push({path, message});
         }
     }
 }

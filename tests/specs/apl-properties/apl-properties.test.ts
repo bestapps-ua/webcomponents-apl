@@ -73,6 +73,35 @@ describe('APLProperties', () => {
             });
             expect(result).toBe('10px');
         });
+
+        it('warn mode still writes an invalid value (default)', async () => {
+            const result = await browser.execute(() => {
+                const el = document.getElementById('apl1') as any;
+                el.setAPLData({});
+                el.setFactory({ getScreen: () => ({ getSizePixels: (v: any) => v, getDPSize: () => 1 }) });
+                APLProperties.validateOnEncode = 'warn';
+                APLProperties.encode(el, 'height', '10potato');
+                return el.getAPLData().height;
+            });
+            expect(result).toBe('10potato');
+        });
+
+        it('strict mode rejects an invalid value (no write, no CSS)', async () => {
+            const result = await browser.execute(() => {
+                const el = document.getElementById('apl1') as any;
+                el.setAPLData({});
+                el.setFactory({ getScreen: () => ({ getSizePixels: (v: any) => v, getDPSize: () => 1 }) });
+                APLProperties.validateOnEncode = 'strict';
+                APLProperties.encode(el, 'height', '10potato');
+                const rejectedWritten = 'height' in el.getAPLData();
+                APLProperties.encode(el, 'height', '200dp');
+                const accepted = el.getAPLData().height;
+                APLProperties.validateOnEncode = 'warn';
+                return { rejectedWritten, accepted };
+            });
+            expect(result.rejectedWritten).toBe(false);
+            expect(result.accepted).toBe('200dp');
+        });
     });
 
     describe('decode()', () => {

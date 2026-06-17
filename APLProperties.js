@@ -1,4 +1,14 @@
 class APLProperties {
+    /**
+     * Value validation performed by encode() before a value is written.
+     *   'warn'   - log invalid values, but still write them (default)
+     *   'strict' - reject the write (skip data + CSS) for invalid values
+     *   'off'    - no validation
+     * Validation only runs when APLValidationRules is loaded on the page, so
+     * fixtures/pages that don't include it are unaffected.
+     */
+    static validateOnEncode = 'warn';
+
     static encode(component, key, value) {
         function setStyle(key, value, property) {
             let options = property.options;
@@ -33,6 +43,22 @@ class APLProperties {
         let data = component.getAPLData();
         let properties = component.getAPLProperties();
         let property = properties[key];
+
+        // Reuse the shared per-type validator (same path as APLValidator) to
+        // catch invalid values at entry, not just at document validation.
+        if (value !== undefined
+            && APLProperties.validateOnEncode !== 'off'
+            && typeof APLValidationRules !== 'undefined') {
+            const message = APLValidationRules.checkValue(key, value, property);
+            if (message) {
+                if (APLProperties.validateOnEncode === 'strict') {
+                    console.error('[APL invalid value rejected]', {key, value, type: property.type, message});
+                    return;
+                }
+                console.warn('[APL invalid value]', {key, value, type: property.type, message});
+            }
+        }
+
         const apl = property.options?.apl;
         let aplProperty = apl || key;
         // do not materialize absent properties in the document JSON
