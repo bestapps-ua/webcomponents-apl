@@ -173,7 +173,7 @@ class APLFactory {
         el.setAPLType(type);
         el.setAPLName(name);
         el.setAPLParent(container);
-        el.setAPLData(data || {});
+        el.setAPLData(data || el.getDefaultAPLData());
         el.setAPLNumber(lastNumber);
         el.setAttribute('tag', tag);
         el.setFactory(this);

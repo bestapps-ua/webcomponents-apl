@@ -1,6 +1,14 @@
 class APLImageComponent extends APLComponent {
     static tag = 'apl-image-component';
 
+    static DEFAULT_SOURCE = 'https://d2o906d8ln7ui1.cloudfront.net/placeholder_image.png';
+
+    getDefaultAPLData() {
+        return {
+            source: this.constructor.DEFAULT_SOURCE,
+        };
+    }
+
     getAPLProperties() {
         let properties = super.getAPLProperties();
         properties = Object.assign(properties, {
