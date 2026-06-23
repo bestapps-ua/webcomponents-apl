@@ -104,7 +104,11 @@ class APLProperties {
                     let value;
                     if (apl) {
                         value = data[apl];
-                        if (!value && component) {
+                        // Only fall back to a getAPL<Property>() accessor when the
+                        // property declares one (e.g. name -> {apl:'id', property:'name'}).
+                        // Authoring-only keys like className/style set `apl` but no
+                        // `property`, so they read straight from data[apl].
+                        if (!value && component && aplProperty) {
                             value = component[`getAPL${aplProperty[0].toUpperCase()}${aplProperty.slice(1)}`]();
                         }
                     } else if (aplProperty) {
@@ -138,6 +142,35 @@ class APLProperties {
             console.warn('[err decode]', {err, properties});
         }
         return props;
+    }
+
+    /**
+     * Reserved namespace for authoring-only keys (e.g. -bestappsClassName,
+     * -bestappsStyle). These round-trip through our save/load format but must be
+     * stripped from the real APL document sent to Alexa. See stripAuthoringKeys.
+     */
+    static AUTHORING_KEY_PREFIX = '-bestapps';
+
+    /**
+     * Deep-clone an APL document (or any sub-value) with every authoring-only key
+     * removed at every level. The working document and the inspector Data tab keep
+     * these keys; this is the sanitizer for the export/preview boundary only.
+     * @param {*} node document, items array, or scalar
+     * @returns {*} cleaned deep clone
+     */
+    static stripAuthoringKeys(node) {
+        if (Array.isArray(node)) {
+            return node.map((n) => this.stripAuthoringKeys(n));
+        }
+        if (node && typeof node === 'object') {
+            const out = {};
+            for (const key of Object.keys(node)) {
+                if (key.startsWith(this.AUTHORING_KEY_PREFIX)) continue;
+                out[key] = this.stripAuthoringKeys(node[key]);
+            }
+            return out;
+        }
+        return node;
     }
 
     static getAlignmentAndPositioningProperties() {

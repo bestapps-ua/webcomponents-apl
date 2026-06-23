@@ -29,6 +29,9 @@ const APLPropertyGroups = {
         Accessibility: ['accessibilityLabel', 'role', 'description'],
         State: ['disabled', 'checked', 'inheritParentState', 'when', 'pointerEvents'],
         Data: ['data', 'numbered', 'numbering', 'preserve'],
+        // Authoring-only styling for OUR renderer (Tailwind classes + raw CSS).
+        // Stripped from the exported APL document (see APLProperties.stripAuthoringKeys).
+        'Custom Styles': ['className', 'style'],
     },
 
     /**

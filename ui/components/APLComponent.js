@@ -203,6 +203,22 @@ class APLComponent extends BestAppsComponent {
             type: 'text',
             options: {}
         },
+        // Authoring-only styling for OUR renderer (not part of the Alexa APL
+        // contract). Stored under reserved, namespaced keys so they round-trip
+        // through save/load but are ignored by the real APL renderer. Applied to
+        // the rendered .wrapper in applyCustomStyles().
+        className: {
+            type: 'text',
+            options: {
+                apl: '-bestappsClassName',
+            }
+        },
+        style: {
+            type: 'text',
+            options: {
+                apl: '-bestappsStyle',
+            }
+        },
 
     }
 
@@ -297,6 +313,20 @@ class APLComponent extends BestAppsComponent {
         } else {
             this.style.transform = '';
         }
+
+        this.applyCustomStyles();
+    }
+
+    /**
+     * Apply the authoring-only `className` (Tailwind/custom utility classes) and
+     * `style` (raw CSS declarations) to the rendered .wrapper. Reads the reserved
+     * keys straight from APLData, so it also restores styling on document load,
+     * then delegates to BestAppsComponent.applyCustomStyles for the actual DOM work
+     * (utility-class resolution via BestAppsStyleEngine + idempotent application).
+     */
+    applyCustomStyles() {
+        const data = this.getAPLData();
+        super.applyCustomStyles(data['-bestappsClassName'], data['-bestappsStyle']);
     }
 
     getAPLProperties() {
@@ -348,6 +378,14 @@ class APLComponent extends BestAppsComponent {
 
     getAPLData() {
         return this.APLData;
+    }
+
+    /**
+     * Default APL data applied when a component is created fresh (e.g. dropped from the palette).
+     * @returns {Object}
+     */
+    getDefaultAPLData() {
+        return {};
     }
 
 

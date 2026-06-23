@@ -20,6 +20,23 @@ class APLDom {
         this.aplDocument = aplDocument;
     }
 
+    /**
+     * Canonical export/preview boundary: the real APL document JSON to send to
+     * Alexa. Returns a deep clone of the working document with authoring-only
+     * `-bestapps*` keys stripped at every level (custom className/style live only in
+     * our renderer). The working document and the inspector Data tab keep those keys
+     * for round-trip, so this is the single place that produces the clean document.
+     * @returns {Object} sanitized APL document
+     */
+    exportDocument() {
+        const doc = this.aplDocument?.document;
+        if (!doc) return doc;
+        if (typeof APLProperties !== 'undefined' && APLProperties.stripAuthoringKeys) {
+            return APLProperties.stripAuthoringKeys(doc);
+        }
+        return JSON.parse(JSON.stringify(doc));
+    }
+
     reset() {
         this.items = [];
         this._guidIndex.clear();

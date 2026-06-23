@@ -84,6 +84,62 @@ export class APLComponentFixture extends ComponentFixture {
         }, this.selector, property);
     }
 
+    async getWrapperClasses(): Promise<string[]> {
+        return browser.execute((sel: string) => {
+            const el = document.querySelector(sel) as any;
+            return Array.from(el?.element?.wrapper?.classList ?? []) as string[];
+        }, this.selector);
+    }
+
+    async getWrapperInlineStyle(property: string): Promise<string> {
+        return browser.execute((sel: string, prop: string) => {
+            const el = document.querySelector(sel) as any;
+            return el?.element?.wrapper?.style?.getPropertyValue(prop) ?? '';
+        }, this.selector, property);
+    }
+
+    async getWrapperComputedStyle(property: string): Promise<string> {
+        return browser.execute((sel: string, prop: string) => {
+            const el = document.querySelector(sel) as any;
+            const w = el?.element?.wrapper;
+            return w ? getComputedStyle(w).getPropertyValue(prop) : '';
+        }, this.selector, property);
+    }
+
+    async getAPLDataKey(key: string): Promise<any> {
+        return browser.execute((sel: string, k: string) => {
+            return (document.querySelector(sel) as any)?.getAPLData()?.[k];
+        }, this.selector, key);
+    }
+
+    /**
+     * Run APLProperties.stripAuthoringKeys on an arbitrary document/value in the
+     * page context (same sanitizer used by APLDom.exportDocument). Returns the
+     * cleaned deep clone so tests can assert -bestapps* keys are gone.
+     */
+    async stripAuthoringKeys(doc: any): Promise<any> {
+        return browser.execute((d: any) => {
+            // @ts-ignore - APLProperties is a global class on the fixture page
+            return APLProperties.stripAuthoringKeys(d);
+        }, doc);
+    }
+
+    /**
+     * Run APLProperties.decodeByComponent on the element (the path the inspector
+     * uses to read values back). Returns the decoded props map, or the thrown
+     * error message string so tests can assert it does not throw.
+     */
+    async decodeComponent(): Promise<any> {
+        return browser.execute((sel: string) => {
+            try {
+                // @ts-ignore - APLProperties is a global class on the fixture page
+                return { ok: true, props: APLProperties.decodeByComponent(document.querySelector(sel)) };
+            } catch (err: any) {
+                return { ok: false, error: String(err && err.message || err) };
+            }
+        }, this.selector);
+    }
+
     async hasCSSMapping(key: string): Promise<boolean> {
         return browser.execute((sel: string, k: string) => {
             const props = (document.querySelector(sel) as any).getAPLProperties();
