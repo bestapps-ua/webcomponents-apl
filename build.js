@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const DIST = path.join(__dirname, 'dist');
-const SKIP = new Set(['node_modules', 'tests', 'vendor', 'webcomponents', '.git', '.claude', '.idea', 'dist']);
+const SKIP = new Set(['node_modules', 'tests', 'vendor', 'webcomponents', '.git', '.claude', '.idea', 'dist', 'examples']);
 const SKIP_FILES = new Set(['build.js', 'push.sh', 'package.json', 'package-lock.json', 'index.html', '.gitignore', '.gitmodules']);
 
 function copyDir(src, dest) {

@@ -1,5 +1,8 @@
 <html>
 <head>
+    <meta charset="utf-8">
+    <!-- This page lives in examples/; resolve all relative asset paths from the repo root. -->
+    <base href="../">
     <style>
         #container {
             display: flex;
@@ -42,6 +45,9 @@
     <script src="../webcomponents/utils/uid.js"></script>
     <script src="../webcomponents/utils/APLComponentRegistry.js"></script>
     <script src="../webcomponents/BestAppsComponent.js"></script>
+    <!-- Tailwind/custom-style runtime (vendored in base repo, optional) -->
+    <script src="../webcomponents/vendor/twind/twind.umd.js"></script>
+    <script src="../webcomponents/BestAppsStyleEngine.js"></script>
 
     <!-- ObjectInspector from webcomponents submodule -->
     <script src="../webcomponents/custom/ObjectInspector/BestAppsObjectInspectorComponent.js"></script>
